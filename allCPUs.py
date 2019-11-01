@@ -66,7 +66,7 @@ for row in trs:
 filename = 'cpus.csv'
 with open(filename, 'w') as f:
     w = csv.DictWriter(f, ['CPU Name', 'Price(USD)', 'CPU Mark', 'CPU Value', 'Thread Mark', 'Thread Value', 'TDP (W)',
-                           'Power Perf.', 'Socket', 'Category'])
+                           'Power Perf.', 'Socket', 'Category'], delimiter=';')
     w.writeheader()
     for cpu in cpus:
         w.writerow(cpu)
