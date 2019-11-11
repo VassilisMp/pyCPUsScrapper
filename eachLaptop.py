@@ -18,7 +18,7 @@ with open('laptops.json', 'r') as lapsFile:
 laptops = json.loads(lapsJson)
 
 # 155
-x = 157
+# x = 157
 
 
 def scrap_data(x):
@@ -29,8 +29,9 @@ def scrap_data(x):
         soup = BeautifulSoup(r.content, 'html5lib')
         # print(soup.prettify())
         print("Request OK")
-        print('{} of {}'.format(i+1, len(links)))
+        print('{} of {}'.format(i + 1, len(links)))
 
+        name = soup.find('h1', attrs={'class': 'page-title'}).text
         specGroups = soup.find('div', attrs={'class': 'spec-groups'})
         # soup.find('h1', attrs={'class': 'spec-groups'})
 
@@ -55,7 +56,8 @@ def scrap_data(x):
 
         price = links[i]["price(\u20ac)"]
 
-        laptop = {'cpuFamily': cpuFamily,
+        laptop = {'name': name,
+                  'cpuFamily': cpuFamily,
                   'cpuModel': cpuModel,
                   'ramSize': ramSize,
                   'ramType': ramType,
@@ -70,7 +72,7 @@ def scrap_data(x):
         time.sleep(random.randrange(2, 5, 1))
 
 
-scrap_data(155)
+scrap_data(0)
 
 jsonStr = json.dumps(laptops, indent=2)
 # print(json.loads(jsonStr))
@@ -79,9 +81,10 @@ with open('laptops.json', 'w') as laptopsFile:
 
 filename = 'laptops.csv'
 with open(filename, 'w') as f:
-    w = csv.DictWriter(f, ['cpuFamily', 'cpuModel', 'ramSize', 'ramType', 'gpuModel', 'hdd1Type', 'hdd1Size',
+    w = csv.DictWriter(f, ['name', 'cpuFamily', 'cpuModel', 'ramSize', 'ramType', 'gpuModel', 'hdd1Type', 'hdd1Size',
                            'hdd2Type', 'hdd2Size', 'price'], delimiter=';')
     w.writeheader()
     for laptop in laptops:
         w.writerow(laptop)
 
+# ddr4['vfm'] = ddr4.cpuModel.apply(lambda x: cpuList[cpuList['CPU Name'].str.contains(x)]['CPU Mark'].values[0])
